@@ -4,15 +4,20 @@ import java.util.stream.IntStream;
 import model.Board;
 import model.Player;
 
+
 public class GameView {
     public static void printBoard(Board board, Player currentPlayer, Player blackPlayer, Player whitePlayer){
         clearConsole();
+
 
         System.out.println("  A B C D E F G H");
         for (int i = 0; i < Board.SIZE ; i++){
             System.out.print((i+1) + " ");
             for (int j = 0 ; j < Board.SIZE; j++){
-                System.out.print(board.getwhatPiece(i, j).getSymbol() + " ");
+                System.out.print(board.getWhatPiece(i, j).getSymbol() + " ");
+            }
+            if(i==2){
+                System.out.print("    Current Board: " + (Board.currentBoardIndex + 1));
             }
             if(i==3){
                 System.out.print("    Player [" + blackPlayer.getName() + "]");
@@ -29,7 +34,8 @@ public class GameView {
             System.out.println();
         }
         if (!GameEngine.isGameOver())
-        System.out.print("Player " + currentPlayer.getName() + " please enter your move:");
+        System.out.print("Player " + currentPlayer.getName() + ", please enter your move or board number:");
+
 
 
     }

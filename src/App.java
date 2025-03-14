@@ -1,25 +1,17 @@
-import model.Piece;
 import model.Player;
-
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Please enter the first player name（Using the black piece ●）：");
-        String Player1 = scanner.nextLine().trim();
-                
-        System.out.print("Please enter the second player name（Using the white piece ○）：");
-        String Player2 = scanner.nextLine().trim();
+        // Initialize players once for all boards using GameSetup
+        Player[] players = GameSetup.initializePlayers(scanner);
 
-        Player blackPlayer = new Player(Player1, Piece.BLACK);
-        Player whitePlayer = new Player(Player2, Piece.WHITE);
-
-        GameEngine game = new GameEngine(blackPlayer, whitePlayer, scanner);
+        // Start the game with the first board by default
+        GameEngine game = new GameEngine(players[0], players[1], scanner);
         game.startGame();
 
         scanner.close();
-
     }
 }
