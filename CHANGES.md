@@ -124,13 +124,37 @@ Player[] players = GameSetup.initializePlayers(scanner);
 
 以下代码确保游戏的结束条件，即当所有棋盘都填满时，游戏结束。
 
-```java:src/
+```java:src/GameView.java
+if (!GameEngine.isGameOver()){
+            if (Board.isBoardFull(Board.currentBoardIndex)){
+                System.out.print("Board " + (Board.currentBoardIndex + 1) + " is full now. Please enter another board number to continue.");
+                return;
+            }
+            System.out.print("Player " + currentPlayer.getName() + ", please enter your move or board number:");
+        }
 ```
 
-```java:src/
+```java:src/GameEngine.java
+static boolean isGameOver() {
+        for (int i = 0; i < Board.NUM_BOARDS; i++){
+            if(!Board.isBoardFull(i)){
+                return false;
+            }
+        }return true;
+    }
 ```
 
-```java:src/
+```java:src/Board.java
+public static boolean isBoardFull(int boardIndex) {
+    for (int i = 0; i < Board.SIZE; i++) {
+        for (int j = 0; j < Board.SIZE; j++) {
+            if (boards[boardIndex][i][j] == Piece.EMPTY) {
+            return false;
+            }
+        }
+    }
+    return true;
+}
 ```
 
 **解释**： `isBoardFull` 遍历单个棋盘，若存在 0（表示可落子），则返回 false，否则返回 true。 `isGameOver` 遍历所有棋盘，只要有一个棋盘未满，则返回 false，否则返回 true，表示游戏结束。这样保证了游戏在所有棋盘填满后才会结束，而非某个棋盘填满时立即终止。
