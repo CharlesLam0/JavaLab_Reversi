@@ -9,12 +9,11 @@ public class GameView {
     public static void printBoard(Board board, Player currentPlayer, Player blackPlayer, Player whitePlayer){
         clearConsole();
 
-
         System.out.println("  A B C D E F G H");
         for (int i = 0; i < Board.SIZE ; i++){
             System.out.print((i+1) + " ");
             for (int j = 0 ; j < Board.SIZE; j++){
-                System.out.print(board.getWhatPiece(i, j).getSymbol() + " ");
+                System.out.print(Board.getWhatPiece(i, j).getSymbol() + " ");
             }
             if(i==2){
                 System.out.print("    Current Board: " + (Board.currentBoardIndex + 1));
@@ -33,11 +32,14 @@ public class GameView {
             }
             System.out.println();
         }
-        if (!GameEngine.isGameOver())
-        System.out.print("Player " + currentPlayer.getName() + ", please enter your move or board number:");
 
-
-
+        if (!GameEngine.isGameOver()){
+            if (Board.isBoardFull(Board.currentBoardIndex)){
+                System.out.print("Board " + (Board.currentBoardIndex + 1) + " is full now. Please enter another board number to continue.");
+                return;
+            }
+            System.out.print("Player " + currentPlayer.getName() + ", please enter your move or board number:");
+        }
     }
 
     public static void clearConsole(){

@@ -25,21 +25,34 @@ public class Board {
     }
 
     public static boolean canPlacePiece(int row, int col, Piece piece) {
-        if (boards[currentBoardIndex][row][col] != Piece.EMPTY) return false;
+        if (boards[currentBoardIndex][row][col] != Piece.EMPTY || isBoardFull(currentBoardIndex)) return false;
         return true;
     }
 
-    public Piece getWhatPiece(int row, int col) {
-        if (row < 0 || row >= SIZE || col < 0 || col >= SIZE) {
-            throw new IllegalArgumentException("Invalid board position");
+    public static Piece getWhatPiece(int row, int col) {
+            if (row < 0 || row >= SIZE || col < 0 || col >= SIZE) {
+                throw new IllegalArgumentException("Invalid board position");
+            }
+            return boards[currentBoardIndex][row][col];
         }
-        return boards[currentBoardIndex][row][col];
-    }
-
+        
     public static void switchBoard(int boardIndex) {
         if (boardIndex < 0 || boardIndex >= NUM_BOARDS) {
             throw new IllegalArgumentException("Invalid board index");
         }
         currentBoardIndex = boardIndex;
     }
+
+    public static boolean isBoardFull(int boardIndex) {
+        for (int i = 0; i < Board.SIZE; i++) {
+            for (int j = 0; j < Board.SIZE; j++) {
+                if (boards[boardIndex][i][j] == Piece.EMPTY) {
+                return false;
+            }
+        }
+    }
+    return true;
+    }
+
 }
+

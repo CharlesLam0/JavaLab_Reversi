@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 import model.Board;
-import model.Piece;
 import model.Player;
 
 public class GameEngine {
@@ -21,9 +20,9 @@ public class GameEngine {
             handleTurn(players[currentPlayerIndices[Board.currentBoardIndex]]);
         }
         GameView.printBoard(board, players[currentPlayerIndices[Board.currentBoardIndex]], players[0], players[1]);
-        System.out.println("Game over! The board is full.");
+        System.out.println("Game over! All the boards are full.");
     }
-
+        
     private void handleTurn(Player player) {
         GameView.printBoard(board, players[currentPlayerIndices[Board.currentBoardIndex]], players[0], players[1]);
 
@@ -44,13 +43,10 @@ public class GameEngine {
     }
 
     static boolean isGameOver() {
-        for (int i = 0; i < Board.SIZE; i++) {
-            for (int j = 0; j < Board.SIZE; j++) {
-                if (board.getWhatPiece(i, j) == Piece.EMPTY) {
-                    return false;
-                }
+        for (int i = 0; i < Board.NUM_BOARDS; i++){
+            if(!Board.isBoardFull(i)){
+                return false;
             }
-        }
-        return true;
+        }return true;
     }
 }
