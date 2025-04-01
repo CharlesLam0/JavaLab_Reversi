@@ -2,8 +2,9 @@ package model;
 
 public enum Piece {
     EMPTY("·"),
-    BLACK("●"),
-    WHITE("○");
+    BLACK("○"),
+    WHITE("●"),
+    CANPLACE("+");
 
     private final String symbol;
 

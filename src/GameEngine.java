@@ -1,52 +1,37 @@
 import java.util.Scanner;
 
 import model.Board;
+import model.Piece;
 import model.Player;
 
-public class GameEngine {
-    private static Board board = new Board();
-    private final Player[] players;
-    private final Scanner scanner;
-    private int[] currentPlayerIndices; // Array to track current player for each board
+public interface GameEngine {
+    Board board = new Board();
+    public Player[] players = new Player[2];
+    public Scanner scanner = new Scanner(System.in);
+    public int currentPlayerIndice = 0;
+    public int passCounter = 0;
 
-    public GameEngine(Player blackPlayer, Player whitePlayer, Scanner scanner) {
-        this.players = new Player[]{blackPlayer, whitePlayer};
-        this.scanner = scanner;
-        this.currentPlayerIndices = new int[Board.NUM_BOARDS]; // Initialize to 0 for all boards
-    }
+    public int getPassCounter();
 
-    public void startGame() {
-        while (!isGameOver()) {
-            handleTurn(players[currentPlayerIndices[Board.currentBoardIndex]]);
-        }
-        GameView.printBoard(board, players[currentPlayerIndices[Board.currentBoardIndex]], players[0], players[1]);
-        System.out.println("Game over! All the boards are full.");
-    }
-        
-    private void handleTurn(Player player) {
-        GameView.printBoard(board, players[currentPlayerIndices[Board.currentBoardIndex]], players[0], players[1]);
+    public void PassCounterAdd();
 
-        int[] input = InputUtils.readValidInput(scanner, board, players[currentPlayerIndices[Board.currentBoardIndex]].pieceType);
-        if (input[1] == -1) {
-            // Input is a board index
-            Board.switchBoard(input[0]);
-            System.out.println("Switched to board " + (input[0] + 1));
-        } else {
-            // Input is a move
-            int row = input[0];
-            int col = input[1];
+    public static int GameID = 0;
 
-            // Place the piece since validation is already done in InputUtils
-            Board.boards[Board.currentBoardIndex][row][col] = players[currentPlayerIndices[Board.currentBoardIndex]].pieceType;
-            currentPlayerIndices[Board.currentBoardIndex] = (currentPlayerIndices[Board.currentBoardIndex] + 1) % 2;
-        }
-    }
+    public int getCurrentPlayerIndice();
 
-    static boolean isGameOver() {
-        for (int i = 0; i < Board.NUM_BOARDS; i++){
-            if(!Board.isBoardFull(i)){
-                return false;
-            }
-        }return true;
-    }
+    public void setCurrentPlayerIndice(int currentPlayerIndice);
+
+    public boolean isGameOver();
+
+    public int getGameID();
+
+    public void setGameID(int id);
+
+    public boolean canPlacePiece(Piece piece);
+
+    public void placePiece(int col, int row, Piece piece);
+
+    public Board getBoard();
+
+    public int getHowManyPieces(Piece piece);
 }
