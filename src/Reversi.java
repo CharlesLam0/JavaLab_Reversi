@@ -162,4 +162,8 @@ public class Reversi implements GameEngine {
         return count;
     }
 
+	@Override
+	public void isLine(int col, int row, Piece piece) {
+	}
+
 }

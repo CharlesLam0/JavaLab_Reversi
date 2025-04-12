@@ -68,4 +68,8 @@ public class Peace implements GameEngine {
     public int getPassCounter() {
         return 0;
     }
+
+    @Override
+    public void isLine(int col, int row, Piece piece) {
+    }
 }

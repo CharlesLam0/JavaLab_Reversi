@@ -12,9 +12,14 @@ public class GameManager {
 
         games.add(new Peace(players[0], players[1], scanner));
         games.get(0).setGameID(0);
+        games.get(0).getBoard().initializeCenter();
         games.add(new Reversi(players[0], players[1], scanner));
         games.get(1).setGameID(1);
+        games.get(1).getBoard().initializeCenter();
         games.get(1).canPlacePiece(players[0].pieceType);
+        games.add(new Gomoku(players[0], players[1], scanner));
+        games.get(2).setGameID(2);
+
         currentGame = 0;
         GameView.printBoard(games.get(0), games.get(0).getBoard(), players[0], players[0],
                 players[1]);
@@ -31,12 +36,19 @@ public class GameManager {
             } else if (input[1] == -4) {
                 games.add(new Peace(players[0], players[1], scanner));
                 games.get(games.size() - 1).setGameID(games.size() - 1);
+                games.get(games.size() - 1).getBoard().initializeCenter();
                 GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
                         players[0], players[1]);
             } else if (input[1] == -5) {
                 games.add(new Reversi(players[0], players[1], scanner));
                 games.get(games.size() - 1).setGameID(games.size() - 1);
+                games.get(games.size() - 1).getBoard().initializeCenter();
                 games.get(games.size() - 1).canPlacePiece(players[0].pieceType);
+                GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
+                        players[0], players[1]);
+            } else if (input[1] == -6) {
+                games.add(new Gomoku(players[0], players[1], scanner));
+                games.get(games.size() - 1).setGameID(games.size() - 1);
                 GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
                         players[0], players[1]);
             } else if (input[1] == -3) {
@@ -49,7 +61,7 @@ public class GameManager {
                     engine.setCurrentPlayerIndice((engine.getCurrentPlayerIndice() + 1) % 2);
                     engine.PassCounterAdd();
                     engine.canPlacePiece(players[engine.getCurrentPlayerIndice()].pieceType);
-                } else if (engine instanceof Peace) {
+                } else {
                     System.out.println();
                     System.out.print("You cannot pass in Peace mode. Please try again.");
                     continue;
@@ -74,11 +86,20 @@ public class GameManager {
                 int col = input[0];
                 int row = input[1];
                 // Place the piece since validation is already done in InputUtils
-                engine.placePiece(col, row, players[engine.getCurrentPlayerIndice()].pieceType);
-                engine.setCurrentPlayerIndice((engine.getCurrentPlayerIndice() + 1) % 2);
-                engine.canPlacePiece(players[engine.getCurrentPlayerIndice()].pieceType);
-                GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
-                        players[0], players[1]);
+                if (engine instanceof Gomoku) {
+                    engine.placePiece(col, row, players[engine.getCurrentPlayerIndice()].pieceType);
+                    engine.isLine(col, row, players[engine.getCurrentPlayerIndice()].pieceType);
+                    engine.setCurrentPlayerIndice((engine.getCurrentPlayerIndice() + 1) % 2);
+                    GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
+                            players[0], players[1]);
+
+                } else {
+                    engine.placePiece(col, row, players[engine.getCurrentPlayerIndice()].pieceType);
+                    engine.setCurrentPlayerIndice((engine.getCurrentPlayerIndice() + 1) % 2);
+                    engine.canPlacePiece(players[engine.getCurrentPlayerIndice()].pieceType);
+                    GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
+                            players[0], players[1]);
+                }
             }
         }
 

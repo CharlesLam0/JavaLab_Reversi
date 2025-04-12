@@ -27,6 +27,10 @@ public class InputUtils {
             return new int[] { 0, -5 };
         }
 
+        if (input.equalsIgnoreCase("gomoku")) {
+            return new int[] { 0, -6 };
+        }
+
         // Check if the input is a single digit, indicating a board index
         if (input.matches("-?\\d+")) {
             int boardIndex = Integer.parseInt(input) - 1;
@@ -70,9 +74,17 @@ public class InputUtils {
                         continue;
                     }
 
-                }
-                if (engine.getClass().getSimpleName().equals("Peace")) {
+                } else if (engine.getClass().getSimpleName().equals("Peace")) {
                     if (engine.getBoard().getWhatPiece(move[0], move[1]) == Piece.EMPTY) {
+                        return move;
+                    } else {
+                        System.out.println();
+                        System.out.println("This position cannot be placed. Please try again.");
+                        continue;
+                    }
+                } else if (engine.getClass().getSimpleName().equals("Gomoku")) {
+                    if (engine.getBoard().getWhatPiece(move[0], move[1]) == Piece.EMPTY &&
+                            engine.canPlacePiece(piece)) {
                         return move;
                     } else {
                         System.out.println();
@@ -82,7 +94,7 @@ public class InputUtils {
                 }
             } catch (IllegalArgumentException e) {
                 System.out.printf(
-                        "Invalid input format. Please enter a number (1-8) followed by a letter (A-H) / a board number (1-%d) / new game (peace / reversi) / quit the game (quit) : ",
+                        "Invalid input format. Please enter a number (1-8) followed by a letter (A-H) / a board number (1-%d) / new game (peace / reversi / gomoku) / quit the game (quit) : ",
                         GameManager.getNumberOfGames());
             }
         }

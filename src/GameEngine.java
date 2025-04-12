@@ -23,6 +23,8 @@ public interface GameEngine {
 
     public boolean isGameOver();
 
+    public void isLine(int col, int row, Piece piece);
+
     public int getGameID();
 
     public void setGameID(int id);

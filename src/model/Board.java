@@ -11,21 +11,17 @@ public class Board {
         initializeBoard();
     }
 
-    private void initializeBoard() {
+    public void initializeBoard() {
         for (int i = 0; i < SIZE; i++) {
             Arrays.fill(board[i], Piece.EMPTY);
         }
-        
-         board[3][3] = Piece.WHITE;
-         board[4][4] = Piece.WHITE;
-         board[3][4] = Piece.BLACK;
-         board[4][3] = Piece.BLACK;
-         
-        //test case
-        //board[1][1] = Piece.WHITE;
-        //board[2][2] = Piece.WHITE;
-        //board[1][2] = Piece.BLACK;
-        //board[2][1] = Piece.BLACK;
+    }
+
+    public void initializeCenter() {
+        board[3][3] = Piece.WHITE;
+        board[4][4] = Piece.WHITE;
+        board[3][4] = Piece.BLACK;
+        board[4][3] = Piece.BLACK;
     }
 
     public Piece getWhatPiece(int col, int row) {

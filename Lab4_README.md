@@ -1,44 +1,49 @@
-# 實驗報告：Reversi 和 Peace 遊戲系統
+# 实验报告：Reversi 和 Peace 游戏系统
 
-## 項目說明
+## 执行 Java 程式
+```
+java -cp bin App
+```
 
-本項目是一個基於 Java 的多遊戲系統，實現了兩種棋盤遊戲：**Reversi（黑白棋）** 和 **Peace（簡化版棋盤遊戲）**。系統支持多個遊戲同時進行，並提供以下功能：
+## 项目说明
 
-1. **玩家交互**：支持玩家輸入名稱、選擇遊戲並進行操作。
-2. **遊戲邏輯處理**：
-   - Reversi：實現棋子合法性檢查、翻轉邏輯和勝負判斷。
-   - Peace：簡化的棋盤遊戲，允許玩家在空位置放置棋子。
-3. **棋盤顯示**：動態更新棋盤狀態，顯示玩家分數和當前遊戲狀態。
-4. **多遊戲管理**：支持同時管理多個遊戲，玩家可在不同遊戲間切換。
+本项目是一个基于 Java 的多游戏系统，实现了两种棋盘游戏：**Reversi（黑白棋）** 和 **Peace（简化版棋盘游戏）**。系统支持多个游戏同时进行，并提供以下功能：
 
-該系統採用了模塊化設計，代碼結構清晰，便於擴展和維護。
+1. **玩家交互**：支持玩家输入名称、选择游戏并进行操作。
+2. **游戏逻辑处理**：
+   - Reversi：实现棋子合法性检查、翻转逻辑和胜负判断。
+   - Peace：简化的棋盘游戏，允许玩家在空位置放置棋子。
+3. **棋盘显示**：动态更新棋盘状态，显示玩家分数和当前游戏状态。
+4. **多游戏管理**：支持同时管理多个游戏，玩家可在不同游戏间切换。
+
+该系统采用了模块化设计，代码结构清晰，便于扩展和维护。
 
 
-## 源代碼文件及其主要功能
+## 源代码文件及其主要功能
 
-| **源代碼文件**         | **功能**                                                         | **主要邏輯**                                                         |
+| **源代码文件**         | **功能**                                                         | **主要逻辑**                                                         |
 |-------------------|--------------------------------------------------------------|------------------------------------------------------------------|
-| App.java          | 程序的入口點，負責啟動遊戲。                                   | 創建 Scanner 對象，用於讀取用戶輸入，調用 GameManager.start(scanner) 開始遊戲。 |
-| GameManager.java  | 管理多個遊戲的邏輯，包括遊戲初始化、切換遊戲、處理玩家輸入等。 | 初始化玩家信息；創建並管理多個遊戲（Peace 和 Reversi）；處理玩家輸入（如移動、切換遊戲、退出等）；調用 GameView 顯示遊戲狀態。 |
-| GameEngine.java   | 定義遊戲引擎的接口，為所有遊戲提供統一的操作方法。           | 定義遊戲基本操作，如放置棋子、檢查遊戲是否結束、獲取棋盤狀態等。            |
-| Reversi.java      | 實現 Reversi 遊戲的邏輯。                                     | 使用方向數組檢查棋子合法放置位置；翻轉被夾住的棋子；計算棋盤上各棋子的數量。    |
-| Peace.java        | 實現 Peace 遊戲的邏輯，簡化版棋盤遊戲。                       | 允許玩家在空位置放置棋子；檢查棋盤是否已滿。                          |
-| GameSetup.java    | 負責初始化玩家信息。                                         | 提示用戶輸入玩家名稱；分配棋子類型（黑棋或白棋）。                      |
-| GameView.java     | 負責遊戲視覺化顯示，包括棋盤打印、玩家信息顯示等。             | 打印棋盤狀態；顯示當前玩家、分數和遊戲狀態；提供清屏功能。                |
-| InputUtils.java   | 處理用戶輸入，解析輸入格式並進行驗證。                       | 支持多種輸入格式（如棋盤坐標、切換遊戲、退出等）；驗證輸入是否合法。         |
-| Board.java        | 表示棋盤的數據結構，提供棋盤操作方法。                         | 初始化棋盤；設置和獲取棋盤上的棋子；檢查棋盤是否已滿。                    |
-| Piece.java        | 定義棋子的類型（如黑棋、白棋、空位等）。                     | 使用枚舉類型表示不同棋子；提供棋子的符號表示。                          |
-| Player.java       | 表示玩家信息。                                               | 存儲玩家名稱和棋子類型；提供玩家信息的格式化輸出。                        |
+| App.java          | 程序的入口点，负责启动游戏。                                   | 创建 Scanner 对象，用于读取用户输入，调用 GameManager.start(scanner) 开始游戏。 |
+| GameManager.java  | 管理多个游戏的逻辑，包括游戏初始化、切换游戏、处理玩家输入等。 | 初始化玩家信息；创建并管理多个游戏（Peace 和 Reversi）；处理玩家输入（如移动、切换游戏、退出等）；调用 GameView 显示游戏状态。 |
+| GameEngine.java   | 定义游戏引擎的接口，为所有游戏提供统一的操作方法。           | 定义游戏基本操作，如放置棋子、检查游戏是否结束、获取棋盘状态等。            |
+| Reversi.java      | 实现 Reversi 游戏的逻辑。                                     | 使用方向数组检查棋子合法放置位置；翻转被夹住的棋子；计算棋盘上各棋子的数量。    |
+| Peace.java        | 实现 Peace 游戏的逻辑，简化版棋盘游戏。                       | 允许玩家在空位置放置棋子；检查棋盘是否已满。                          |
+| GameSetup.java    | 负责初始化玩家信息。                                         | 提示用户输入玩家名称；分配棋子类型（黑棋或白棋）。                      |
+| GameView.java     | 负责游戏视觉化显示，包括棋盘打印、玩家信息显示等。             | 打印棋盘状态；显示当前玩家、分数和游戏状态；提供清屏功能。                |
+| InputUtils.java   | 处理用户输入，解析输入格式并进行验证。                       | 支持多种输入格式（如棋盘坐标、切换游戏、退出等）；验证输入是否合法。         |
+| Board.java        | 表示棋盘的数据结构，提供棋盘操作方法。                         | 初始化棋盘；设置和获取棋盘上的棋子；检查棋盘是否已满。                    |
+| Piece.java        | 定义棋子的类型（如黑棋、白棋、空位等）。                     | 使用枚举类型表示不同棋子；提供棋子的符号表示。                          |
+| Player.java       | 表示玩家信息。                                               | 存储玩家名称和棋子类型；提供玩家信息的格式化输出。                        |
 
 
 
 ## 关键代码及其设计思路
 
 
-### 1. **Reversi 的合法性檢查**
+### 1. **Reversi 的合法性检查**
 ``` java:src/Reversi.java
 public boolean canPlacePiece(Piece piece) {
-       // 清除棋盤上的 CANPLACE 標記
+       // 清除棋盘上的 CANPLACE 标记
        for (int i = 0; i < Board.SIZE; i++) {
            for (int j = 0; j < Board.SIZE; j++) {
                if (board.getWhatPiece(i, j) == Piece.CANPLACE) {
@@ -50,20 +55,20 @@ public boolean canPlacePiece(Piece piece) {
        boolean canPlace = false;
        for (int i = 0; i < Board.SIZE; i++) {
            for (int j = 0; j < Board.SIZE; j++) {
-               // 檢查當前位置是否為空
+               // 检查当前位置是否为空
                if (board.getWhatPiece(i, j) != Piece.EMPTY) {
                    continue;
                }
 
                boolean isValidMove = false;
 
-               // 遍歷所有方向
+               // 遍历所有方向
                for (int k = 0; k < directions.length; k++) {
                    int x = directions[k][0];
                    int y = directions[k][1];
                    int steps = 0;
 
-                   // 沿著方向檢查
+                   // 沿着方向检查
                    while (i + x >= 0 && i + x < Board.SIZE && j + y >= 0 && j + y < Board.SIZE) {
                        if (board.getWhatPiece(i + x, j + y) == Piece.EMPTY ||
                                board.getWhatPiece(i + x, j + y) == Piece.CANPLACE) {
@@ -71,7 +76,7 @@ public boolean canPlacePiece(Piece piece) {
                        }
 
                        if (board.getWhatPiece(i + x, j + y) == piece) {
-                           if (steps > 0) { // 確保至少有一個棋子被夾住
+                           if (steps > 0) { // 确保至少有一个棋子被夹住
                                isValidMove = true;
                            }
                            break;
@@ -83,7 +88,7 @@ public boolean canPlacePiece(Piece piece) {
                    }
                }
 
-               // 如果該位置合法，標記為 CANPLACE
+               // 如果该位置合法，标记为 CANPLACE
                if (isValidMove) {
                    board.setPiece(i, j, Piece.CANPLACE);
                    canPlace = true;
@@ -95,18 +100,18 @@ public boolean canPlacePiece(Piece piece) {
    }
 ```  
 
-#### 設計思路
-- 使用方向數組（`directions`）遍歷每個可能的方向。
-- 檢查是否存在至少一個夾住對方棋子的情況。
-- 如果合法，將該位置標記為 `CANPLACE`。
+#### 设计思路
+- 使用方向数组（`directions`）遍历每个可能的方向。
+- 检查是否存在至少一个夹住对方棋子的情况。
+- 如果合法，将该位置标记为 `CANPLACE`。
 
 
-### 2. **Reversi 的棋子翻轉邏輯**
+### 2. **Reversi 的棋子翻转逻辑**
 
 ``` java:src/Reversi.java
 public void placePiece(int col, int row, Piece piece) {
     passCounter = 0;
-    // 確保當前位置為合法位置
+    // 确保当前位置为合法位置
     if (board.getWhatPiece(col, row) == Piece.CANPLACE) {
         board.setPiece(col, row, piece);
 
@@ -115,7 +120,7 @@ public void placePiece(int col, int row, Piece piece) {
             int dy = directions[k][1];
             int x = dx;
             int y = dy;
-            // 用於存儲需要翻轉的棋子位置
+            // 用于存储需要翻转的棋子位置
             java.util.ArrayList<int[]> toFlip = new java.util.ArrayList<>();
             boolean validDirection = false;
 
@@ -135,7 +140,7 @@ public void placePiece(int col, int row, Piece piece) {
                 y += dy;
             }
 
-            // 如果方向合法，翻轉所有記錄的棋子
+            // 如果方向合法，翻转所有记录的棋子
             if (validDirection) {
                 for (int[] pos : toFlip) {
                     board.setPiece(pos[0], pos[1], piece);
@@ -145,44 +150,44 @@ public void placePiece(int col, int row, Piece piece) {
     }
 }
 ```
-#### 設計思路
-- 遍歷所有方向，記錄需要翻轉的棋子位置。
-- 當找到合法方向時，翻轉所有記錄的棋子。
+#### 设计思路
+- 遍历所有方向，记录需要翻转的棋子位置。
+- 当找到合法方向时，翻转所有记录的棋子。
 
 
-### 3. **InputUtils 的輸入解析與驗證**
+### 3. **InputUtils 的输入解析与验证**
 
 ```java:src/InputUtils.java
 public static int[] parseInput(String input) throws IllegalArgumentException {
-    // 移除不可打印字符並修剪輸入
+    // 移除不可打印字符并修剪输入
     input = input.replaceAll("[^\\p{Print}]", "").trim();
 
     if (input.equalsIgnoreCase("quit")) {
-        return new int[] { 0, -2 }; // 用戶選擇退出遊戲
+        return new int[] { 0, -2 }; // 用户选择退出游戏
     }
 
     if (input.equalsIgnoreCase("pass")) {
-        return new int[] { 0, -3 }; // 用戶選擇跳過回合
+        return new int[] { 0, -3 }; // 用户选择跳过回合
     }
 
     if (input.equalsIgnoreCase("peace")) {
-        return new int[] { 0, -4 }; // 用戶選擇開始 Peace 遊戲
+        return new int[] { 0, -4 }; // 用户选择开始 Peace 游戏
     }
 
     if (input.equalsIgnoreCase("reversi")) {
-        return new int[] { 0, -5 }; // 用戶選擇開始 Reversi 遊戲
+        return new int[] { 0, -5 }; // 用户选择开始 Reversi 游戏
     }
 
-    // 檢查是否為單個數字，表示棋盤索引
+    // 检查是否为单个数字，表示棋盘索引
     if (input.matches("-?\\d+")) {
         int boardIndex = Integer.parseInt(input) - 1;
         if (boardIndex < 0 || boardIndex >= GameManager.getNumberOfGames()) {
             throw new IllegalArgumentException("Invalid board index");
         }
-        return new int[] { boardIndex, -1 }; // 返回棋盤索引
+        return new int[] { boardIndex, -1 }; // 返回棋盘索引
     }
 
-    // 檢查是否為合法的棋盤坐標
+    // 检查是否为合法的棋盘坐标
     Matcher matcher = INPUT_PATTERN.matcher(input);
     if (!matcher.find()) {
         throw new IllegalArgumentException("Invalid input format");
@@ -195,22 +200,22 @@ public static int[] parseInput(String input) throws IllegalArgumentException {
 }
 ```
 
-#### 設計思路
+#### 设计思路
 
-- **輸入格式處理：**
-移除不可打印字符，確保輸入的清潔性。
-支持多種輸入命令（如 quit、pass、peace、reversi 等）。
+- **输入格式处理：**
+移除不可打印字符，确保输入的清洁性。
+支持多种输入命令（如 quit、pass、peace、reversi 等）。
 
-- **棋盤索引檢查：**
-如果輸入為數字，則將其解析為棋盤索引，並檢查是否在有效範圍內。
+- **棋盘索引检查：**
+如果输入为数字，则将其解析为棋盘索引，并检查是否在有效范围内。
 
-- **棋盤坐標解析：**
-使用正則表達式匹配合法的棋盤坐標（如 1A 或 8H）。
-將坐標轉換為數組形式，方便後續處理。
+- **棋盘坐标解析：**
+使用正则表达式匹配合法的棋盘坐标（如 1A 或 8H）。
+将坐标转换为数组形式，方便后续处理。
 
 
 
-### 4. InputUtils 的輸入讀取與驗證
+### 4. InputUtils 的输入读取与验证
 ```java:src/InputUtils.java
 public static int[] readValidInput(Scanner scanner, GameEngine engine, Piece piece) {
     while (true) {
@@ -220,9 +225,9 @@ public static int[] readValidInput(Scanner scanner, GameEngine engine, Piece pie
         try {
             int[] move = parseInput(input);
             if (move[1] <= -1) {
-                return move; // 返回特殊命令（如退出、跳過回合等）
+                return move; // 返回特殊命令（如退出、跳过回合等）
             }
-            // 檢查是否可以放置棋子
+            // 检查是否可以放置棋子
             engine.canPlacePiece(piece);
 
             if (engine.getClass().getSimpleName().equals("Reversi")) {
@@ -250,24 +255,24 @@ public static int[] readValidInput(Scanner scanner, GameEngine engine, Piece pie
 }
 ```
 
-#### 設計思路
+#### 设计思路
 
-- **循環讀取輸入：**
-使用 Scanner 循環讀取用戶輸入，忽略空行。
+- **循环读取输入：**
+使用 Scanner 循环读取用户输入，忽略空行。
 
-- **解析輸入：**
-調用 parseInput 方法解析輸入，處理特殊命令（如退出、跳過回合等）。
+- **解析输入：**
+调用 parseInput 方法解析输入，处理特殊命令（如退出、跳过回合等）。
 
-- **合法性檢查:**
-根據當前遊戲類型（Reversi 或 Peace），檢查輸入位置是否可以放置棋子。
-如果位置不合法，提示用戶重新輸入。
+- **合法性检查:**
+根据当前游戏类型（Reversi 或 Peace），检查输入位置是否可以放置棋子。
+如果位置不合法，提示用户重新输入。
 
-- **錯誤處理：**
-捕獲非法輸入的異常，提示用戶正確的輸入格式。
+- **错误处理：**
+捕获非法输入的异常，提示用户正确的输入格式。
 
 
 
-### 5. **GameView 的棋盤顯示與遊戲狀態管理**
+### 5. **GameView 的棋盘显示与游戏状态管理**
 
 ```java:src/GameView.java
 public static void printBoard(GameEngine engine, Board board, Player currentPlayer, Player blackPlayer,
@@ -314,7 +319,7 @@ public static void printBoard(GameEngine engine, Board board, Player currentPlay
         System.out.printf("%-25s %-30s %-50s%n", left, middle, right);
     }
 
-    // 判斷遊戲是否結束
+    // 判断游戏是否结束
     boolean allGamesOver = true;
     for (GameEngine game : GameManager.games) {
         if (!game.isGameOver()) {
@@ -359,35 +364,35 @@ public static void printBoard(GameEngine engine, Board board, Player currentPlay
 }
 ```
 
-#### 設計思路
+#### 设计思路
 
-- **棋盤顯示：**
-使用 buildLeftSection 方法構建棋盤的左側部分，顯示棋盤的行和列以及棋子狀態。
-使用 buildMiddleSection 方法顯示當前遊戲的分數和玩家信息。
-使用 buildRightSection 方法顯示遊戲列表，方便玩家切換遊戲。
+- **棋盘显示：**
+使用 buildLeftSection 方法构建棋盘的左侧部分，显示棋盘的行和列以及棋子状态。
+使用 buildMiddleSection 方法显示当前游戏的分数和玩家信息。
+使用 buildRightSection 方法显示游戏列表，方便玩家切换游戏。
 
-- **遊戲狀態管理：**
+- **游戏状态管理：**
 
-判斷當前遊戲是否結束，並根據遊戲類型（Reversi 或 Peace）顯示勝負結果或平局信息。
-如果所有遊戲結束，提示玩家開始新遊戲或退出。
+判断当前游戏是否结束，并根据游戏类型（Reversi 或 Peace）显示胜负结果或平局信息。
+如果所有游戏结束，提示玩家开始新游戏或退出。
 
 - **玩家提示：**
-根據當前玩家的狀態，提示合法的輸入選項（如移動、跳過回合、切換遊戲等）。
-如果當前玩家無法進行操作，提示其跳過回合。
+根据当前玩家的状态，提示合法的输入选项（如移动、跳过回合、切换游戏等）。
+如果当前玩家无法进行操作，提示其跳过回合。
 
 - **清屏功能：**
-使用 clearConsole 方法清除控制台，保持界面整潔。
-根據操作系統選擇適合的清屏命令（Windows 使用 cls，macOS/Linux 使用 ANSI 控制碼）。
+使用 clearConsole 方法清除控制台，保持界面整洁。
+根据操作系统选择适合的清屏命令（Windows 使用 cls，macOS/Linux 使用 ANSI 控制码）。
 
 
 
-### 6. **GameManager 的遊戲管理邏輯**
+### 6. **GameManager 的游戏管理逻辑**
 
 ```java:src/GameManager.java
 public static void start(Scanner scanner) {
     Player[] players = GameSetup.initializePlayers(scanner);
 
-    // 初始化 Peace 和 Reversi 遊戲
+    // 初始化 Peace 和 Reversi 游戏
     games.add(new Peace(players[0], players[1], scanner));
     games.get(0).setGameID(0);
     games.add(new Reversi(players[0], players[1], scanner));
@@ -395,20 +400,20 @@ public static void start(Scanner scanner) {
     games.get(1).canPlacePiece(players[0].pieceType);
     currentGame = 0;
 
-    // 顯示初始棋盤
+    // 显示初始棋盘
     GameView.printBoard(games.get(0), games.get(0).getBoard(), players[0], players[0], players[1]);
 
     while (true) {
         GameEngine engine = games.get(currentGame);
         int[] input = InputUtils.readValidInput(scanner, engine, players[engine.getCurrentPlayerIndice()].pieceType);
 
-        // 處理退出遊戲
+        // 处理退出游戏
         if (input[1] == -2) {
             System.out.println("Exiting the game.");
             break;
         }
 
-        // 處理新遊戲創建
+        // 处理新游戏创建
         else if (input[1] == -4) {
             games.add(new Peace(players[0], players[1], scanner));
             games.get(games.size() - 1).setGameID(games.size() - 1);
@@ -420,7 +425,7 @@ public static void start(Scanner scanner) {
             GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()], players[0], players[1]);
         }
 
-        // 處理跳過回合
+        // 处理跳过回合
         else if (input[1] == -3) {
             if (engine instanceof Reversi) {
                 if (engine.canPlacePiece(players[engine.getCurrentPlayerIndice()].pieceType)) {
@@ -437,7 +442,7 @@ public static void start(Scanner scanner) {
             GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()], players[0], players[1]);
         }
 
-        // 處理遊戲切換
+        // 处理游戏切换
         else if (input[1] == -1) {
             if (input[0] >= 0 && input[0] < games.size()) {
                 currentGame = input[0];
@@ -450,7 +455,7 @@ public static void start(Scanner scanner) {
             GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()], players[0], players[1]);
         }
 
-        // 處理棋子放置
+        // 处理棋子放置
         else {
             int col = input[0];
             int row = input[1];
@@ -463,32 +468,32 @@ public static void start(Scanner scanner) {
 }
 ```
 
-####  設計思路
+####  设计思路
 
-- **遊戲初始化：**
-初始化玩家信息，並創建兩個遊戲（Peace 和 Reversi）。
-設置每個遊戲的 GameID，方便後續管理。
+- **游戏初始化：**
+初始化玩家信息，并创建两个游戏（Peace 和 Reversi）。
+设置每个游戏的 GameID，方便后续管理。
 
-- **遊戲循環：**
-使用 while 循環處理玩家輸入，根據輸入執行對應的操作。
+- **游戏循环：**
+使用 while 循环处理玩家输入，根据输入执行对应的操作。
 
-- **輸入處理：**
-調用 InputUtils.readValidInput 方法解析輸入，支持多種操作：
-- 退出遊戲：處理 quit 命令，結束遊戲。
-- 創建新遊戲：支持創建 Peace 或 Reversi 新遊戲。
-- 跳過回合：檢查當前遊戲是否允許跳過回合，並切換玩家。
-- 切換遊戲：根據輸入的遊戲編號切換到對應的遊戲。
-- 棋子放置：在合法位置放置棋子，並切換到下一位玩家。
+- **输入处理：**
+调用 InputUtils.readValidInput 方法解析输入，支持多种操作：
+- 退出游戏：处理 quit 命令，结束游戏。
+- 创建新游戏：支持创建 Peace 或 Reversi 新游戏。
+- 跳过回合：检查当前游戏是否允许跳过回合，并切换玩家。
+- 切换游戏：根据输入的游戏编号切换到对应的游戏。
+- 棋子放置：在合法位置放置棋子，并切换到下一位玩家。
 
-- **遊戲狀態更新：**
-每次操作後，調用 GameView.printBoard 更新棋盤顯示，並提示玩家下一步操作。
+- **游戏状态更新：**
+每次操作后，调用 GameView.printBoard 更新棋盘显示，并提示玩家下一步操作。
 
-- **錯誤處理：**
-檢查輸入是否合法（如遊戲編號是否有效、是否可以跳過回合等），並提示用戶重新輸入。
+- **错误处理：**
+检查输入是否合法（如游戏编号是否有效、是否可以跳过回合等），并提示用户重新输入。
 
 
 
-### 7. **GameEngine 的遊戲引擎接口**
+### 7. **GameEngine 的游戏引擎接口**
 
 ```java:src/GameEngine.java
 public interface GameEngine {
@@ -524,39 +529,39 @@ public interface GameEngine {
 }
 ```
 
-#### 設計思路
+#### 设计思路
 
-- **統一接口設計：**
-定義遊戲引擎的接口，為所有遊戲（如 Reversi 和 Peace）提供統一的操作方法。
-確保不同遊戲可以通過相同的接口進行管理和操作。
+- **统一接口设计：**
+定义游戏引擎的接口，为所有游戏（如 Reversi 和 Peace）提供统一的操作方法。
+确保不同游戏可以通过相同的接口进行管理和操作。
 
 - **核心方法：**
 getPassCounter 和 PassCounterAdd：
-用於追蹤玩家跳過回合的次數，特別是在 Reversi 中判斷遊戲是否結束。
+用于追踪玩家跳过回合的次数，特别是在 Reversi 中判断游戏是否结束。
 
 getCurrentPlayerIndice 和 setCurrentPlayerIndice：
-用於管理當前玩家的索引，實現玩家輪流操作。
+用于管理当前玩家的索引，实现玩家轮流操作。
 
 isGameOver：
-判斷遊戲是否結束，根據具體遊戲的規則進行實現。
+判断游戏是否结束，根据具体游戏的规则进行实现。
 
 canPlacePiece 和 placePiece：
-檢查棋子是否可以放置，以及執行棋子放置的操作。
+检查棋子是否可以放置，以及执行棋子放置的操作。
 
 getHowManyPieces：
-計算棋盤上某種類型棋子的數量，用於顯示分數或判斷勝負。
+计算棋盘上某种类型棋子的数量，用于显示分数或判断胜负。
 
 
-- **遊戲管理支持：**
+- **游戏管理支持：**
 getGameID 和 setGameID：
-為每個遊戲分配唯一的 ID，方便在多遊戲模式下進行管理和切換。
+为每个游戏分配唯一的 ID，方便在多游戏模式下进行管理和切换。
 
 getBoard：
-提供對棋盤數據結構的訪問，支持遊戲邏輯和顯示功能。
+提供对棋盘数据结构的访问，支持游戏逻辑和显示功能。
 
-- **擴展性：**
-通過接口的設計，未來可以輕鬆添加新的遊戲類型，只需實現該接口即可。
-確保代碼的模塊化和可維護性。
+- **扩展性：**
+通过接口的设计，未来可以轻松添加新的游戏类型，只需实现该接口即可。
+确保代码的模块化和可维护性。
 
 
 
@@ -566,7 +571,7 @@ getBoard：
 
 ### 运⾏⽰例
 
-#### 定義玩家
+#### 定义玩家
 
 ```bash
 Please enter the first player name (Using the black piece ●): Alice
@@ -974,7 +979,7 @@ Please enter another board number to continue / new game (peace / reversi) / qui
 
 
 - reversi结束的条件：棋盘下满，或者双⽅均⽆合法落⼦位置。
-為方便測驗，改為4*4的棋盤
+为方便测验，改为4*4的棋盘
 
 ```bash
   A B C D E F G H
@@ -1212,4 +1217,5 @@ Please enter another board number to continue / new game (peace / reversi) / qui
 Exiting the game.
 (base) charleslam@LamdeMacBook-Pro lab2 % 
 ```
+
 

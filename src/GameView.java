@@ -11,6 +11,7 @@ public class GameView {
             Player whitePlayer) {
         clearConsole();
 
+        String[] playername = { blackPlayer.getName(), whitePlayer.getName() };
         String blackplayerStr = null;
         String whiteplayerStr = null;
         String blackPlayerScore = null;
@@ -81,40 +82,49 @@ public class GameView {
                 }
                 if (allGamesOver) {
                     System.out.println("All Games over! All the boards are full.");
-                    System.out.print("Please enter a new game (peace / reversi) / quit the game (quit) : ");
+                    System.out.print("Please enter a new game (peace / reversi / gomoku) / quit the game (quit) : ");
                 } else {
                     System.out.println(
-                            "Please enter another board number to continue / new game (peace / reversi) / quit the game (quit) : ");
+                            "Please enter another board number to continue / new game (peace / reversi / gomoku) / quit the game (quit) : ");
                 }
 
             } else {
                 if (!engine.canPlacePiece(currentPlayer.pieceType) && engine.getPassCounter() < 2) {
                     System.out.printf("Player " + currentPlayer.getName() +
-                            ", you do not have place for your piece, pleace enter pass / game number (1-%d) / new game (peace / reversi) / quit : ",
+                            ", you do not have place for your piece, pleace enter pass / game number (1-%d) / new game (peace / reversi / gomoku) / quit : ",
                             GameManager.getNumberOfGames());
                     return;
                 } else if (engine.getPassCounter() < 2) {
                     System.out.printf("Player " + currentPlayer.getName() +
-                            ", please enter your move (1-8,a-h) / game number (1-%d) / new game (peace / reversi) / quit the game (quit) : ",
+                            ", please enter your move (1-8,a-h) / game number (1-%d) / new game (peace / reversi / gomoku) / quit the game (quit) : ",
                             GameManager.getNumberOfGames());
                 }
             }
-        } else if (engine instanceof Peace) {
+        } else {
             if (engine.isGameOver()) {
-                System.out.println("Game " + (engine.getGameID() + 1) + " is over now.");
+                System.out.print("Game " + (engine.getGameID() + 1) + " is over now.");
+                if (engine instanceof Gomoku) {
+                    if (engine.getBoard().isBoardFull()) {
+                        System.out.println(" It's a tie!");
+                    } else {
+                        System.out.println(
+                                " Player [" + playername[(engine.getCurrentPlayerIndice() + 1) % 2] + "] wins!");
+                    }
+                } else {
+                    System.out.println();
+                }
                 if (allGamesOver) {
                     System.out.println("All Games over! All the boards are full.");
-                    System.out.print("Please enter a new game (peace / reversi) / quit the game (quit) : ");
+                    System.out.print("Please enter a new game (peace / reversi / gomoku) / quit the game (quit) : ");
                 } else {
                     System.out.println(
-                            "Please enter another board number to continue / new game (peace / reversi) / quit the game (quit) : ");
+                            "Please enter another board number to continue / new game (peace / reversi / gomoku) / quit the game (quit) : ");
                 }
             } else {
                 System.out.printf("Player " + currentPlayer.getName() +
-                        ", please enter your move (1-8,a-h) / game number (1-%d) / new game (peace / reversi) / quit the game (quit) : ",
+                        ", please enter your move (1-8,a-h) / game number (1-%d) / new game (peace / reversi / gomoku) / quit the game (quit) : ",
                         GameManager.getNumberOfGames());
             }
-
         }
     }
 
@@ -147,6 +157,10 @@ public class GameView {
                 middle.append(String.format("%-17s %s", whiteplayerStr, whitePlayerScore));
             } else {
                 middle.append(String.format("%-17s", whiteplayerStr));
+            }
+        } else if (row == 5) {
+            if (engine instanceof Gomoku) {
+                middle.append(String.format("Current Round : %d", engine.getHowManyPieces(null) / 2 + 1));
             }
         }
         return middle.toString();
