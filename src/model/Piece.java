@@ -4,7 +4,9 @@ public enum Piece {
     EMPTY("·"),
     BLACK("○"),
     WHITE("●"),
-    CANPLACE("+");
+    CANPLACE("+"),
+    BARRIER("#"),
+    CRATER("@");
 
     private final String symbol;
 
@@ -12,7 +14,7 @@ public enum Piece {
         this.symbol = symbol;
     }
 
-    public String getSymbol(){
+    public String getSymbol() {
         return symbol;
     }
 }

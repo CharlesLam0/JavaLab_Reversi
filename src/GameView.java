@@ -42,15 +42,24 @@ public class GameView {
             blackplayerStr = String.format("%s" + blackPlayer.getpieceType(), blackplayerStr);
         }
 
-        System.out.println("  A B C D E F G H");
-        for (int i = 0; i < Board.SIZE; i++) {
+        // Print column headers based on game type
+        if (engine instanceof Gomoku) {
+            System.out.print("  ");
+            for (char c = 'A'; c < 'A' + board.getSize(); c++) {
+                System.out.print(c + " ");
+            }
+            System.out.println();
+        } else {
+            System.out.println("  A B C D E F G H");
+        }
+
+        for (int i = 0; i < board.getSize(); i++) {
             String left = buildLeftSection(engine, board, i);
             String middle = buildMiddleSection(engine, blackPlayerScore, whitePlayerScore, blackplayerStr,
                     whiteplayerStr, i);
             String right = buildRightSection(i);
 
             System.out.printf("%-25s %-30s %-50s%n", left, middle, right);
-
         }
 
         boolean allGamesOver = true;
@@ -121,17 +130,31 @@ public class GameView {
                             "Please enter another board number to continue / new game (peace / reversi / gomoku) / quit the game (quit) : ");
                 }
             } else {
-                System.out.printf("Player " + currentPlayer.getName() +
-                        ", please enter your move (1-8,a-h) / game number (1-%d) / new game (peace / reversi / gomoku) / quit the game (quit) : ",
-                        GameManager.getNumberOfGames());
+                if (engine instanceof Gomoku) {
+                    System.out.printf("Player " + currentPlayer.getName() +
+                            ", please enter your move (1-F,A-O) or use bomb (@1A) / game number (1-%d) / new game (peace / reversi / gomoku) / quit the game (quit) : ",
+                            GameManager.getNumberOfGames());
+                } else {
+                    System.out.printf("Player " + currentPlayer.getName() +
+                            ", please enter your move (1-8,a-h) / game number (1-%d) / new game (peace / reversi / gomoku) / quit the game (quit) : ",
+                            GameManager.getNumberOfGames());
+                }
             }
         }
     }
 
     private static String buildLeftSection(GameEngine engine, Board board, int row) {
         StringBuilder left = new StringBuilder();
-        left.append((row + 1) + " ");
-        for (int j = 0; j < Board.SIZE; j++) {
+
+        // Use hexadecimal numbers for rows if Gomoku
+        if (engine instanceof Gomoku) {
+            String hexRow = Integer.toHexString(row + 1).toUpperCase();
+            left.append(hexRow + " ");
+        } else {
+            left.append((row + 1) + " ");
+        }
+
+        for (int j = 0; j < board.getSize(); j++) {
             if (engine instanceof Peace && board.getWhatPiece(row, j) == Piece.CANPLACE) {
                 left.append(Piece.EMPTY.getSymbol() + " ");
             } else {
@@ -152,11 +175,35 @@ public class GameView {
             } else {
                 middle.append(String.format("%-17s", blackplayerStr));
             }
+
+            // Add bomb count for black player in Gomoku
+            if (engine instanceof Gomoku) {
+                Gomoku gomoku = (Gomoku) engine;
+                Player[] players = gomoku.getPlayers();
+                for (Player player : players) {
+                    if (player.pieceType == Piece.BLACK) {
+                        middle.append(String.format(" Bombs: %d", player.getBombCount()));
+                        break;
+                    }
+                }
+            }
         } else if (row == 4) {
             if (whitePlayerScore != null) {
                 middle.append(String.format("%-17s %s", whiteplayerStr, whitePlayerScore));
             } else {
                 middle.append(String.format("%-17s", whiteplayerStr));
+            }
+
+            // Add bomb count for white player in Gomoku
+            if (engine instanceof Gomoku) {
+                Gomoku gomoku = (Gomoku) engine;
+                Player[] players = gomoku.getPlayers();
+                for (Player player : players) {
+                    if (player.pieceType == Piece.WHITE) {
+                        middle.append(String.format(" Bombs: %d", player.getBombCount()));
+                        break;
+                    }
+                }
             }
         } else if (row == 5) {
             if (engine instanceof Gomoku) {
