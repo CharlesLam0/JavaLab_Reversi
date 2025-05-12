@@ -5,7 +5,8 @@ import model.Piece;
 import model.Player;
 
 public class Peace implements GameEngine {
-    private Board board = new Board();
+    private static final int BOARD_SIZE = 8; // Peace board size
+    private Board board;
     private int currentPlayerIndice; // Array to track current player for each board
     public int GameID;
 
@@ -22,7 +23,7 @@ public class Peace implements GameEngine {
     }
 
     public Peace(Player blackPlayer, Player whitePlayer, Scanner scanner) {
-        this.board = new Board();
+        this.board = new Board(BOARD_SIZE);
         this.currentPlayerIndice = 0;
     }
 
@@ -42,8 +43,8 @@ public class Peace implements GameEngine {
     }
 
     public boolean canPlacePiece(Piece piece) {
-        for (int i = 0; i < Board.SIZE; i++) {
-            for (int j = 0; j < Board.SIZE; j++) {
+        for (int i = 0; i < getBoard().getSize(); i++) {
+            for (int j = 0; j < getBoard().getSize(); j++) {
                 if (board.getWhatPiece(i, j) == Piece.EMPTY) {
                     return true;
                 }

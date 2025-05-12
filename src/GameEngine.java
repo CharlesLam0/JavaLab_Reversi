@@ -5,7 +5,6 @@ import model.Piece;
 import model.Player;
 
 public interface GameEngine {
-    Board board = new Board();
     public Player[] players = new Player[2];
     public Scanner scanner = new Scanner(System.in);
     public int currentPlayerIndice = 0;

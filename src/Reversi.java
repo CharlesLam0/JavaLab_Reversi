@@ -5,7 +5,8 @@ import model.Piece;
 import model.Player;
 
 public class Reversi implements GameEngine {
-    private Board board = new Board();
+    private static final int BOARD_SIZE = 8; // Reversi standard board size
+    private Board board;
     private int currentPlayerIndice = 0;
     public int passCounter = 0;
 
@@ -13,8 +14,8 @@ public class Reversi implements GameEngine {
         return passCounter;
     }
 
-    public void PassCounterAdd () {
-        passCounter ++;
+    public void PassCounterAdd() {
+        passCounter++;
     }
 
     public int getCurrentPlayerIndice() {
@@ -34,7 +35,7 @@ public class Reversi implements GameEngine {
     public int GameID;
 
     public Reversi(Player blackPlayer, Player whitePlayer, Scanner scanner) {
-        this.board = new Board();
+        this.board = new Board(BOARD_SIZE);
         this.currentPlayerIndice = 0;
     }
 
@@ -55,8 +56,8 @@ public class Reversi implements GameEngine {
 
     public boolean canPlacePiece(Piece piece) {
         // clear the CANPLACE pieces
-        for (int i = 0; i < Board.SIZE; i++) {
-            for (int j = 0; j < Board.SIZE; j++) {
+        for (int i = 0; i < getBoard().getSize(); i++) {
+            for (int j = 0; j < getBoard().getSize(); j++) {
                 if (board.getWhatPiece(i, j) == Piece.CANPLACE) {
                     board.setPiece(i, j, Piece.EMPTY);
                 }
@@ -64,8 +65,8 @@ public class Reversi implements GameEngine {
         }
 
         boolean canPlace = false;
-        for (int i = 0; i < Board.SIZE; i++) {
-            for (int j = 0; j < Board.SIZE; j++) {
+        for (int i = 0; i < getBoard().getSize(); i++) {
+            for (int j = 0; j < getBoard().getSize(); j++) {
                 // check if the position is empty
                 if (board.getWhatPiece(i, j) != Piece.EMPTY) {
                     continue;
@@ -79,7 +80,7 @@ public class Reversi implements GameEngine {
                     int steps = 0;
 
                     // go in the direction of x and y
-                    while (i + x >= 0 && i + x < Board.SIZE && j + y >= 0 && j + y < Board.SIZE) {
+                    while (i + x >= 0 && i + x < getBoard().getSize() && j + y >= 0 && j + y < getBoard().getSize()) {
                         // if the position is empty or CANPLACE, break, the direction is not valid
                         if (board.getWhatPiece(i + x, j + y) == Piece.EMPTY ||
                                 board.getWhatPiece(i + x, j + y) == Piece.CANPLACE) {
@@ -126,7 +127,8 @@ public class Reversi implements GameEngine {
                 // List to store the positions to flip
                 java.util.ArrayList<int[]> toFlip = new java.util.ArrayList<>();
                 boolean validDirection = false;
-                while (col + x >= 0 && col + x < Board.SIZE && row + y >= 0 && row + y < Board.SIZE) {
+                while (col + x >= 0 && col + x < getBoard().getSize() && row + y >= 0
+                        && row + y < getBoard().getSize()) {
                     Piece currentPiece = board.getWhatPiece(col + x, row + y);
 
                     if (currentPiece == Piece.EMPTY || currentPiece == Piece.CANPLACE) {
@@ -152,8 +154,8 @@ public class Reversi implements GameEngine {
 
     public int getHowManyPieces(Piece piece) {
         int count = 0;
-        for (int i = 0; i < Board.SIZE; i++) {
-            for (int j = 0; j < Board.SIZE; j++) {
+        for (int i = 0; i < getBoard().getSize(); i++) {
+            for (int j = 0; j < getBoard().getSize(); j++) {
                 if (board.getWhatPiece(i, j) == piece) {
                     count++;
                 }
@@ -162,8 +164,8 @@ public class Reversi implements GameEngine {
         return count;
     }
 
-	@Override
-	public void isLine(int col, int row, Piece piece) {
-	}
+    @Override
+    public void isLine(int col, int row, Piece piece) {
+    }
 
 }

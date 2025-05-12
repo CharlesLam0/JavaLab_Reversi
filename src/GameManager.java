@@ -10,13 +10,16 @@ public class GameManager {
     public static void start(Scanner scanner) {
         Player[] players = GameSetup.initializePlayers(scanner);
 
+        // Create initial games with their specific board sizes
         games.add(new Peace(players[0], players[1], scanner));
         games.get(0).setGameID(0);
         games.get(0).getBoard().initializeCenter();
+
         games.add(new Reversi(players[0], players[1], scanner));
         games.get(1).setGameID(1);
         games.get(1).getBoard().initializeCenter();
         games.get(1).canPlacePiece(players[0].pieceType);
+
         games.add(new Gomoku(players[0], players[1], scanner));
         games.get(2).setGameID(2);
 
@@ -30,6 +33,8 @@ public class GameManager {
             GameEngine engine = games.get(currentGame);
             int[] input = InputUtils.readValidInput(scanner, engine,
                     players[engine.getCurrentPlayerIndice()].pieceType);
+
+            // Handle special cases based on return codes
             if (input[1] == -2) {
                 System.out.println("Exiting the game.");
                 break;
@@ -82,23 +87,42 @@ public class GameManager {
                 GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
                         players[0], players[1]);
             } else {
-                // Input is a move
-                int col = input[0];
-                int row = input[1];
-                // Place the piece since validation is already done in InputUtils
-                if (engine instanceof Gomoku) {
-                    engine.placePiece(col, row, players[engine.getCurrentPlayerIndice()].pieceType);
-                    engine.isLine(col, row, players[engine.getCurrentPlayerIndice()].pieceType);
-                    engine.setCurrentPlayerIndice((engine.getCurrentPlayerIndice() + 1) % 2);
-                    GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
-                            players[0], players[1]);
+                // Handle bomb usage for Gomoku
+                if (input.length > 2 && input[2] == 1 && engine instanceof Gomoku) {
+                    Gomoku gomoku = (Gomoku) engine;
+                    // If bomb was successfully used, proceed to next player's turn
+                    if (gomoku.useBomb(input[0], input[1])) {
+                        System.out.println();
+                        System.out.println("Bomb used successfully! Opponent's piece removed and crater placed.");
+                        // Switch to next player
+                        engine.setCurrentPlayerIndice((engine.getCurrentPlayerIndice() + 1) % 2);
+                        GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
+                                players[0], players[1]);
+                    } else {
+                        System.out.println();
+                        System.out.println("Failed to use bomb. Please try again.");
+                        continue;
+                    }
+                }
+                // Normal move
+                else {
+                    int col = input[0];
+                    int row = input[1];
+                    // Place the piece since validation is already done in InputUtils
+                    if (engine instanceof Gomoku) {
+                        engine.placePiece(col, row, players[engine.getCurrentPlayerIndice()].pieceType);
+                        engine.isLine(col, row, players[engine.getCurrentPlayerIndice()].pieceType);
+                        engine.setCurrentPlayerIndice((engine.getCurrentPlayerIndice() + 1) % 2);
+                        GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
+                                players[0], players[1]);
 
-                } else {
-                    engine.placePiece(col, row, players[engine.getCurrentPlayerIndice()].pieceType);
-                    engine.setCurrentPlayerIndice((engine.getCurrentPlayerIndice() + 1) % 2);
-                    engine.canPlacePiece(players[engine.getCurrentPlayerIndice()].pieceType);
-                    GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
-                            players[0], players[1]);
+                    } else {
+                        engine.placePiece(col, row, players[engine.getCurrentPlayerIndice()].pieceType);
+                        engine.setCurrentPlayerIndice((engine.getCurrentPlayerIndice() + 1) % 2);
+                        engine.canPlacePiece(players[engine.getCurrentPlayerIndice()].pieceType);
+                        GameView.printBoard(engine, engine.getBoard(), players[engine.getCurrentPlayerIndice()],
+                                players[0], players[1]);
+                    }
                 }
             }
         }
